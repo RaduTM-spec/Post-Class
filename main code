@@ -1,0 +1,137 @@
+#include <iostream>
+#include <string>
+#include <iterator>
+#include <algorithm>
+#include <vector>
+#include <list>
+
+using namespace std;
+
+class Post
+{
+	static int postsNumber;
+	int likes, dislikes, commentsNumber;
+	vector<string> comments;
+	string id, author, text;
+public:
+	//Constructors & Destructors---------
+	Post()
+	{
+		throw "Cannot create a NULL Post";
+		delete this;//cannot create a NULL POST
+	}
+	Post(string id, string author, string text)
+	{
+		this->id = id;
+		this->author = author;
+		this->text = text;
+		postsNumber++;
+	}
+	Post(const Post& p)//copy constructor
+	{
+		this->id = p.id;
+		this->author = p.author;
+		this->text = p.text;
+		postsNumber++;//not sure here
+	}
+	~Post()
+	{
+		;
+	}
+
+	//Setters & Getters------------------
+	//Take ID in string form
+	string GetId()
+	{
+		return this->id;
+	}
+	//Take ID in integer form
+	int GetIntId()
+	{
+		return stoi(this->id);
+	}
+	string GetAuthor()
+	{
+		return this->author;
+	}
+	string GetText()
+	{
+		return this->text;
+	}
+	int GetPostsNumber()
+	{
+		postsNumber;
+	}
+
+	//Methods----------------------------
+	static Post Create(string id, string author, string text)
+	{
+		Post obj = Post(id, author, text);
+		return obj;
+	}
+	void Delete()
+	{
+		delete this;
+	}
+	void Like()
+	{
+		this->likes++;
+	}
+	void Dislike()
+	{
+		this->dislikes++;
+	}
+	void Comment(string text)
+	{
+		this->comments.push_back(text);
+	}
+	void DeleteCommentByIndex(int index)
+	{
+		this->comments.erase(this->comments.begin() + index);
+		
+	}
+	void DeleteCommentByText(string text)
+	{
+		int index = 0;
+		for (auto x : this->comments)
+		{
+			if (x == text)
+			{
+				this->comments.erase(this->comments.begin() + index);
+				return;
+			}
+			index++;
+		}
+	}
+	void ClearComments()
+	{
+		this->comments.clear();
+	}
+	void ChangeAuthorTo(string auth)
+	{
+		this->author = auth;
+	}
+	void ChangeIdTo(string id)
+	{
+		this->id = id;
+	}
+	//Changes the Text of a post
+	void ChangeContentTo(string text)
+	{
+		this->text = text;
+	}
+};
+int Post::postsNumber = 0;
+class PostCreation
+{
+public:
+	static Post CreatePost(string id, string author, string text)
+	{
+		Post obj = Post(id, author, text);
+		return obj;
+	}
+};
+void main(int argc, char* argv[])
+{
+	;
+}
